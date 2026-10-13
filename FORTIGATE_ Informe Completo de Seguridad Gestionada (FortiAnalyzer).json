@@ -214,8 +214,8 @@
         "kind": "Panel",
         "spec": {
           "id": 2,
-          "title": "🧠 Uso Promedio de Memoria [%] (Conserve Mode Alert)",
-          "description": "Porcentaje de utilización de memoria. Umbral crítico al 80% donde FortiGate entra en Modo Conservativo (KB Fortinet FD33103).",
+          "title": "🧠 Uso Promedio de Memoria por Equipo [%]",
+          "description": "Uso de memoria y estado operativo por equipo FortiGate. Umbral preventivo al 70% y crítico al 80% (Modo Conservativo KB Fortinet FD33103).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -231,14 +231,26 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
+                        "bucketAggs": [
+                          {
+                            "field": "data.devname",
+                            "id": "2",
+                            "settings": {
+                              "missing": "FortiGate",
+                              "order": "desc",
+                              "orderBy": "_count",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          }
+                        ],
                         "metrics": [
                           {
                             "id": "1",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:system OR data.logdesc:*memory* OR data.msg:*memory*)",
+                        "query": "((data.subtype:system AND (data.logdesc:*memory* OR data.msg:*memory* OR data.action:(\"perf-stats\" OR \"conserve mode\") OR rule.id:44608)) OR data.mem:*) AND data.devname:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -257,42 +269,34 @@
           },
           "vizConfig": {
             "kind": "VizConfig",
-            "group": "gauge",
+            "group": "bargauge",
             "version": "13.2.0",
             "spec": {
               "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.35,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": true
+                "displayMode": "gradient",
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
                 },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
+                "maxVizHeight": 300,
+                "minVizHeight": 16,
+                "minVizWidth": 8,
+                "namePlacement": "auto",
+                "orientation": "horizontal",
                 "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
+                  "calcs": [],
                   "fields": "",
-                  "values": false
+                  "values": true
                 },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": true,
-                "showThresholdMarkers": true,
+                "showUnfilled": true,
                 "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
+                "valueMode": "color"
               },
               "fieldConfig": {
                 "defaults": {
                   "unit": "percent",
-                  "min": 0,
-                  "max": 100,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -309,7 +313,10 @@
                         "color": "#F2495C"
                       }
                     ]
-                  }
+                  },
+                  "min": 0,
+                  "max": 100,
+                  "decimals": 1
                 },
                 "overrides": []
               }
@@ -338,15 +345,24 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
-                        "metrics": [
+                        "bucketAggs": [
                           {
-                            "id": "1",
-                            "type": "cardinality",
-                            "field": "data.devname"
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.devname:*",
+                        "metrics": [
+                          {
+                            "field": "data.devname",
+                            "id": "1",
+                            "type": "cardinality"
+                          }
+                        ],
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND data.devname:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -413,7 +429,7 @@
         "spec": {
           "id": 10,
           "title": "📊 Total Sesiones (Total Sessions)",
-          "description": "Cantidad total de sesiones y flujos procesados en el período (FortiAnalyzer Página 4).",
+          "description": "Total acumulado de sesiones y flujos de tráfico finalizados o registrados (data.type: traffic, subtype: forward) procesados por el firewall FortiGate durante el período seleccionado.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -429,14 +445,23 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
+                        "bucketAggs": [
+                          {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
+                          }
+                        ],
                         "metrics": [
                           {
                             "id": "1",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.type:traffic OR rule.groups:traffic OR data.action:*)",
+                        "query": "(data.type:traffic AND (data.subtype:forward OR data.sessionid:* OR data.action:(close OR timeout OR client-rst OR server-rst OR accept))) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -502,8 +527,8 @@
         "kind": "Panel",
         "spec": {
           "id": 11,
-          "title": "💾 Tráfico Total Transferido (Bytes)",
-          "description": "Suma acumulada de bytes enviados y recibidos (FortiAnalyzer Página 4).",
+          "title": "💾 Total Flujos / Eventos de Tráfico Transferidos",
+          "description": "Cantidad total de transacciones y flujos de tráfico procesados por la flota FortiGate en el período.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -519,20 +544,23 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
+                        "bucketAggs": [
+                          {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
+                          }
+                        ],
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.sentbyte"
-                          },
-                          {
-                            "id": "2",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.sentbyte:* OR data.rcvdbyte:*)",
+                        "query": "(data.sentbyte:* OR data.rcvdbyte:* OR data.type:traffic) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -573,7 +601,7 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "decbytes",
+                  "unit": "short",
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -615,15 +643,24 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
-                        "metrics": [
+                        "bucketAggs": [
                           {
-                            "id": "1",
-                            "type": "cardinality",
-                            "field": "data.srcip"
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.srcip:*",
+                        "metrics": [
+                          {
+                            "field": "data.srcip",
+                            "id": "1",
+                            "type": "cardinality"
+                          }
+                        ],
+                        "query": "data.srcip:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -706,15 +743,24 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
-                        "metrics": [
+                        "bucketAggs": [
                           {
-                            "id": "1",
-                            "type": "cardinality",
-                            "field": "data.app"
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.app:*",
+                        "metrics": [
+                          {
+                            "field": "data.app",
+                            "id": "1",
+                            "type": "cardinality"
+                          }
+                        ],
+                        "query": "data.app:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -797,15 +843,24 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
-                        "metrics": [
+                        "bucketAggs": [
                           {
-                            "id": "1",
-                            "type": "cardinality",
-                            "field": "data.dstip"
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.dstip:* OR data.dstname:*)",
+                        "metrics": [
+                          {
+                            "field": "data.dstip",
+                            "id": "1",
+                            "type": "cardinality"
+                          }
+                        ],
+                        "query": "data.dstip:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1099,8 +1154,8 @@
         "kind": "Panel",
         "spec": {
           "id": 18,
-          "title": "🌊 Gráfico de Uso de Ancho de Banda (Sent vs Received)",
-          "description": "Volumen de datos enviados (Sent) y recibidos (Received) en el tiempo con unidades de red (FortiAnalyzer Página 4).",
+          "title": "🌊 Gráfico de Uso de Ancho de Banda (Sent vs Received - KB)",
+          "description": "Flujo temporal de ancho de banda en KB transmitido (Sent / Tx) y recibido (Received / Rx) a través de las interfaces del firewall (FortiAnalyzer Página 4).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1110,7 +1165,7 @@
                   "kind": "PanelQuery",
                   "spec": {
                     "hidden": false,
-                    "refId": "Sent",
+                    "refId": "Sent (Tx)",
                     "query": {
                       "kind": "DataQuery",
                       "group": "grafana-opensearch-datasource",
@@ -1129,11 +1184,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.sentbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.sentbyte:*",
+                        "query": "(data.dstintf:(*wan* OR *port1* OR *internet*) OR data.dstintfrole:wan OR data.direction:outgoing OR (data.sentbyte:* AND NOT data.sentbyte:0)) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1147,7 +1201,7 @@
                   "kind": "PanelQuery",
                   "spec": {
                     "hidden": false,
-                    "refId": "Received",
+                    "refId": "Received (Rx)",
                     "query": {
                       "kind": "DataQuery",
                       "group": "grafana-opensearch-datasource",
@@ -1166,11 +1220,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.rcvdbyte:*",
+                        "query": "(data.srcintf:(*wan* OR *port1* OR *internet*) OR data.srcintfrole:wan OR data.direction:incoming OR (data.rcvdbyte:* AND NOT data.rcvdbyte:0)) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1211,7 +1264,7 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "decbytes",
+                  "unit": "kbytes",
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1228,7 +1281,7 @@
                     "axisBorderShow": false,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
-                    "axisLabel": "Bytes transferidos",
+                    "axisLabel": "Ancho de Banda (KB)",
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "drawStyle": "line",
@@ -1286,10 +1339,11 @@
                         "bucketAggs": [
                           {
                             "field": "data.service",
-                            "id": "3",
+                            "id": "2",
                             "settings": {
+                              "missing": "Otros Protocolos",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "15"
                             },
                             "type": "terms"
@@ -1298,15 +1352,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.sentbyte"
-                          },
-                          {
-                            "id": "2",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.service:* OR data.proto:*)",
+                        "query": "data.service:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1334,7 +1383,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Tráfico Total (Bytes)"
+                    "displayName": "Sesiones / Flujos de Tráfico"
                   }
                 ]
               },
@@ -1376,28 +1425,12 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tráfico Total (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "2"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Sesiones"
+                        "value": "Sesiones / Flujos de Tráfico"
                       }
                     ]
                   }
@@ -1433,8 +1466,9 @@
                             "field": "data.appcat",
                             "id": "2",
                             "settings": {
+                              "missing": "Otras Categorías",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "10"
                             },
                             "type": "terms"
@@ -1443,11 +1477,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.appcat:*",
+                        "query": "data.appcat:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1497,7 +1530,7 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "decbytes",
+                  "unit": "short",
                   "color": {
                     "mode": "palette-classic"
                   },
@@ -1539,30 +1572,32 @@
                         "bucketAggs": [
                           {
                             "field": "data.app",
-                            "id": "3",
+                            "id": "2",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "20"
                             },
                             "type": "terms"
                           },
                           {
                             "field": "data.appcat",
-                            "id": "4",
+                            "id": "3",
                             "settings": {
+                              "missing": "General",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "1"
                             },
                             "type": "terms"
                           },
                           {
                             "field": "data.apprisk",
-                            "id": "5",
+                            "id": "4",
                             "settings": {
+                              "missing": "Info/Low",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "1"
                             },
                             "type": "terms"
@@ -1571,15 +1606,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
-                          },
-                          {
-                            "id": "2",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.app:*",
+                        "query": "data.app:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1607,7 +1637,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Tráfico (Bytes)"
+                    "displayName": "Sesiones / Conexiones"
                   }
                 ]
               },
@@ -1673,28 +1703,12 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tráfico (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "2"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Sesiones"
+                        "value": "Sesiones / Conexiones"
                       }
                     ]
                   }
@@ -1728,20 +1742,20 @@
                         "bucketAggs": [
                           {
                             "field": "data.app",
-                            "id": "3",
+                            "id": "2",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "10"
                             },
                             "type": "terms"
                           },
                           {
                             "field": "data.srcip",
-                            "id": "4",
+                            "id": "3",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "5"
                             },
                             "type": "terms"
@@ -1750,15 +1764,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
-                          },
-                          {
-                            "id": "2",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.app:* AND data.srcip:*",
+                        "query": "data.app:* AND data.srcip:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1786,7 +1795,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Tráfico (Bytes)"
+                    "displayName": "Sesiones"
                   }
                 ]
               },
@@ -1840,23 +1849,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Tráfico (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "2"
+                      "options": "Count"
                     },
                     "properties": [
                       {
@@ -1897,8 +1890,9 @@
                             "field": "data.appcat",
                             "id": "2",
                             "settings": {
+                              "missing": "Otras Categorías",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "10"
                             },
                             "type": "terms"
@@ -1908,7 +1902,7 @@
                             "id": "3",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "5"
                             },
                             "type": "terms"
@@ -1917,11 +1911,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.appcat:* AND data.app:*",
+                        "query": "data.appcat:* AND data.app:* AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1949,7 +1942,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Tráfico (Bytes)"
+                    "displayName": "Sesiones"
                   }
                 ]
               },
@@ -2003,16 +1996,12 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tráfico (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
+                        "value": "Sesiones"
                       }
                     ]
                   }
@@ -2045,11 +2034,12 @@
                       "spec": {
                         "bucketAggs": [
                           {
-                            "field": "data.catdesc",
+                            "field": "data.appcat",
                             "id": "2",
                             "settings": {
+                              "missing": "Otras Categorías Web",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "10"
                             },
                             "type": "terms"
@@ -2061,7 +2051,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.catdesc:* OR data.filtercat:*)",
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2152,11 +2142,12 @@
                       "spec": {
                         "bucketAggs": [
                           {
-                            "field": "data.catdesc",
-                            "id": "3",
+                            "field": "data.appcat",
+                            "id": "2",
                             "settings": {
+                              "missing": "Otras Categorías",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "15"
                             },
                             "type": "terms"
@@ -2166,14 +2157,283 @@
                           {
                             "id": "1",
                             "type": "count"
-                          },
-                          {
-                            "id": "2",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.catdesc:*",
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
+                        "timeField": "@timestamp"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
+                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                      }
+                    }
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {
+                "maxDataPoints": 100
+              }
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.2.0",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Peticiones / Sesiones"
+                  }
+                ]
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "data.appcat"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "URL Category / Categoría"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "data.catdesc"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "URL Category / Categoría"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Count"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Peticiones / Sesiones"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "1"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Peticiones / Sesiones"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "panel-32": {
+        "kind": "Panel",
+        "spec": {
+          "id": 32,
+          "title": "⏱️ Categorías Web Más Navegadas (Peticiones / Tiempo)",
+          "description": "Volumen de actividad y tiempo de navegación por categoría de sitios web.",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-opensearch-datasource",
+                      "version": "v0",
+                      "spec": {
+                        "bucketAggs": [
+                          {
+                            "field": "data.appcat",
+                            "id": "2",
+                            "settings": {
+                              "missing": "Otras Categorías",
+                              "order": "desc",
+                              "orderBy": "_count",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          }
+                        ],
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
+                        "timeField": "@timestamp"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
+                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                      }
+                    }
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {
+                "maxDataPoints": 100
+              }
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "barchart",
+            "version": "13.2.0",
+            "spec": {
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.9,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "right",
+                  "showLegend": true
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "short",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "#5794F2"
+                      },
+                      {
+                        "value": 100,
+                        "color": "#FADE2A"
+                      },
+                      {
+                        "value": 500,
+                        "color": "#F2495C"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-33": {
+        "kind": "Panel",
+        "spec": {
+          "id": 33,
+          "title": "🌐 Categorías con Más Ancho de Banda por Sitio Web (Dominio)",
+          "description": "Desglose por Categoría -> Dominio / Website -> Tráfico en Bytes (FortiAnalyzer Página 10).",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "refId": "A",
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-opensearch-datasource",
+                      "version": "v0",
+                      "spec": {
+                        "bucketAggs": [
+                          {
+                            "field": "data.catdesc",
+                            "id": "2",
+                            "settings": {
+                              "missing": "Categoría General",
+                              "order": "desc",
+                              "orderBy": "_count",
+                              "size": "8"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.hostname",
+                            "id": "3",
+                            "settings": {
+                              "missing": "Sin Hostname",
+                              "order": "desc",
+                              "orderBy": "_count",
+                              "size": "5"
+                            },
+                            "type": "terms"
+                          }
+                        ],
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "query": "(data.catdesc:* OR data.subtype:webfilter) AND (data.hostname:* OR data.url:*) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2236,271 +2496,6 @@
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "URL Category"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "1"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Peticiones"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "2"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Tráfico (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-32": {
-        "kind": "Panel",
-        "spec": {
-          "id": 32,
-          "title": "⏱️ Categorías Web por Tiempo Navegado (Browsing Time)",
-          "description": "Tiempo total de navegación acumulado por categoría web en segundos y horas (FortiAnalyzer Página 9).",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "refId": "A",
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-opensearch-datasource",
-                      "version": "v0",
-                      "spec": {
-                        "bucketAggs": [
-                          {
-                            "field": "data.catdesc",
-                            "id": "2",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "10"
-                            },
-                            "type": "terms"
-                          }
-                        ],
-                        "metrics": [
-                          {
-                            "id": "1",
-                            "type": "sum",
-                            "field": "data.duration"
-                          }
-                        ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.catdesc:* AND data.duration:*",
-                        "timeField": "@timestamp"
-                      },
-                      "labels": {
-                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
-                      }
-                    }
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {
-                "maxDataPoints": 100
-              }
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "barchart",
-            "version": "13.2.0",
-            "spec": {
-              "options": {
-                "barRadius": 0,
-                "barWidth": 0.9,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "right",
-                  "showLegend": true
-                },
-                "orientation": "horizontal",
-                "showValue": "auto",
-                "stacking": "none",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                },
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 0
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "s",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "#5794F2"
-                      },
-                      {
-                        "value": 100,
-                        "color": "#FADE2A"
-                      },
-                      {
-                        "value": 500,
-                        "color": "#F2495C"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "palette-classic"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-33": {
-        "kind": "Panel",
-        "spec": {
-          "id": 33,
-          "title": "🌐 Categorías con Más Ancho de Banda por Sitio Web (Dominio)",
-          "description": "Desglose por Categoría -> Dominio / Website -> Tráfico en Bytes (FortiAnalyzer Página 10).",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "refId": "A",
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-opensearch-datasource",
-                      "version": "v0",
-                      "spec": {
-                        "bucketAggs": [
-                          {
-                            "field": "data.catdesc",
-                            "id": "2",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "8"
-                            },
-                            "type": "terms"
-                          },
-                          {
-                            "field": "data.hostname",
-                            "id": "3",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "5"
-                            },
-                            "type": "terms"
-                          }
-                        ],
-                        "metrics": [
-                          {
-                            "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
-                          }
-                        ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.catdesc:* AND data.hostname:*",
-                        "timeField": "@timestamp"
-                      },
-                      "labels": {
-                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
-                      }
-                    }
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {
-                "maxDataPoints": 100
-              }
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "table",
-            "version": "13.2.0",
-            "spec": {
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true,
-                "sortBy": [
-                  {
-                    "desc": true,
-                    "displayName": "Tráfico (Bytes)"
-                  }
-                ]
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "data.catdesc"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
                         "value": "Category"
                       }
                     ]
@@ -2520,16 +2515,12 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tráfico (Bytes)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
+                        "value": "Peticiones"
                       }
                     ]
                   }
@@ -2655,8 +2646,8 @@
         "kind": "Panel",
         "spec": {
           "id": 35,
-          "title": "📊 Usuarios por Tiempo de Navegación y Tráfico (Sent & Received)",
-          "description": "Métricas completas por usuario/IP: Tiempo de navegación (Browsing Time), Bytes enviados y recibidos (FortiAnalyzer Página 11).",
+          "title": "📊 Usuarios con Mayor Actividad de Navegación y Tráfico",
+          "description": "Ranking de usuarios / IPs locales por volumen de solicitudes web y sesiones cursadas.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2675,10 +2666,10 @@
                         "bucketAggs": [
                           {
                             "field": "data.srcip",
-                            "id": "4",
+                            "id": "2",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "3",
+                              "orderBy": "_count",
                               "size": "15"
                             },
                             "type": "terms"
@@ -2687,21 +2678,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.duration"
-                          },
-                          {
-                            "id": "2",
-                            "type": "sum",
-                            "field": "data.sentbyte"
-                          },
-                          {
-                            "id": "3",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND data.srcip:*",
+                        "query": "data.srcip:* AND (data.subtype:webfilter OR data.type:traffic OR data.hostname:*) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2729,7 +2709,7 @@
                 "sortBy": [
                   {
                     "desc": true,
-                    "displayName": "Tráfico Recibido"
+                    "displayName": "Total Sesiones / Solicitudes"
                   }
                 ]
               },
@@ -2771,48 +2751,12 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tiempo Navegado (s)"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "s"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "2"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Tráfico Enviado"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "3"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Tráfico Recibido"
-                      },
-                      {
-                        "id": "unit",
-                        "value": "decbytes"
+                        "value": "Total Sesiones / Solicitudes"
                       }
                     ]
                   }
@@ -3265,12 +3209,12 @@
                       "spec": {
                         "bucketAggs": [
                           {
-                            "field": "data.logdesc",
+                            "field": "rule.description",
                             "id": "2",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
-                              "size": "10"
+                              "orderBy": "_count",
+                              "size": "15"
                             },
                             "type": "terms"
                           },
@@ -3278,8 +3222,9 @@
                             "field": "data.level",
                             "id": "3",
                             "settings": {
+                              "missing": "Critical/High",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "1"
                             },
                             "type": "terms"
@@ -3291,7 +3236,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(critical OR emergency) OR rule.level:>=10)",
+                        "query": "(rule.id:(81606 OR 81607 OR 81604 OR 81615 OR 81628 OR 81643 OR 44608 OR 44611 OR 44612 OR 44621 OR 44628 OR 44629) OR data.level:(critical OR error OR alert OR emergency) OR data.severity:(critical OR high) OR rule.level:>=7) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3349,7 +3294,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "data.logdesc"
+                      "options": "rule.description"
                     },
                     "properties": [
                       {
@@ -3373,7 +3318,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
@@ -3583,7 +3528,7 @@
                             "id": "2",
                             "settings": {
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "15"
                             },
                             "type": "terms"
@@ -3592,19 +3537,10 @@
                             "field": "data.user",
                             "id": "3",
                             "settings": {
+                              "missing": "admin / no user",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "5"
-                            },
-                            "type": "terms"
-                          },
-                          {
-                            "field": "data.ui",
-                            "id": "4",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "1"
                             },
                             "type": "terms"
                           }
@@ -3615,7 +3551,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (rule.id:(81606 OR 81607) OR (data.subtype:system AND data.action:login AND data.status:failed) OR data.logdesc:*login*failed*)",
+                        "query": "(rule.id:(81606 OR 81607 OR 81614 OR 81615) OR data.logdesc:*login*fail* OR data.action:*login*fail* OR (data.subtype:system AND data.action:login AND (data.status:failed OR data.status:failure))) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3697,19 +3633,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "data.ui"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "UI Method"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "1"
+                      "options": "Count"
                     },
                     "properties": [
                       {
@@ -5061,11 +4985,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.sentbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND data.sentbyte:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0)",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5098,11 +5021,10 @@
                         "metrics": [
                           {
                             "id": "1",
-                            "type": "sum",
-                            "field": "data.rcvdbyte"
+                            "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND data.rcvdbyte:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.rcvdbyte:* AND NOT data.rcvdbyte:0)",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5143,7 +5065,7 @@
               },
               "fieldConfig": {
                 "defaults": {
-                  "unit": "decbytes",
+                  "unit": "kbytes",
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -5160,7 +5082,7 @@
                     "axisBorderShow": false,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
-                    "axisLabel": "Tráfico VPN",
+                    "axisLabel": "Flujo VPN (KB)",
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "drawStyle": "line",
@@ -5305,14 +5227,23 @@
                       "group": "grafana-opensearch-datasource",
                       "version": "v0",
                       "spec": {
-                        "bucketAggs": [],
+                        "bucketAggs": [
+                          {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                              "interval": "auto"
+                            },
+                            "type": "date_histogram"
+                          }
+                        ],
                         "metrics": [
                           {
                             "id": "1",
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (rule.id:(81614 OR 81615 OR 81604) OR (data.subtype:vpn AND (data.action:\"ssl-login-fail\" OR data.status:failed)))",
+                        "query": "(rule.id:(81604 OR 81606 OR 81614 OR 81615 OR 81617 OR 81623 OR 81625 OR 81637) OR (data.subtype:vpn AND (data.action:(\"ssl-login-fail\" OR \"login-fail\") OR data.status:failed)) OR data.action:\"ssl-login-fail\") AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5589,8 +5520,9 @@
                             "field": "data.user",
                             "id": "2",
                             "settings": {
+                              "missing": "Desconocido / Anónimo",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "15"
                             },
                             "type": "terms"
@@ -5599,8 +5531,9 @@
                             "field": "data.remip",
                             "id": "3",
                             "settings": {
+                              "missing": "IP No especificada",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "5"
                             },
                             "type": "terms"
@@ -5609,8 +5542,9 @@
                             "field": "data.tunneltype",
                             "id": "4",
                             "settings": {
+                              "missing": "SSL-VPN",
                               "order": "desc",
-                              "orderBy": "1",
+                              "orderBy": "_count",
                               "size": "1"
                             },
                             "type": "terms"
@@ -5622,7 +5556,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (rule.id:(81614 OR 81615 OR 81604) OR (data.subtype:vpn AND data.action:(\"ssl-login-fail\" OR \"login-fail\")))",
+                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN* OR data.action:login)) OR data.logdesc:*login*fail* OR (data.subtype:vpn AND (data.action:*fail* OR data.reason:*fail*))) AND agent.name:$agent_name",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5709,7 +5643,19 @@
                     "properties": [
                       {
                         "id": "displayName",
-                        "value": "Tipo"
+                        "value": "Tipo Túnel"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Count"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Intentos Fallidos"
                       }
                     ]
                   },
