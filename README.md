@@ -108,3 +108,4 @@ Para que los logs en OpenSearch/Grafana contengan el grupo del agente, se utiliz
    </agent_config>
    ```
 3. A partir de ese momento, cada alerta generada por los agentes de ese grupo incluirá automáticamente el campo `agent.labels.group: "nombre_de_tu_grupo"`, permitiendo que el selector de Grafana filtre inmediatamente los paneles.
+4. En caso de ver la nota *No cached mapping for this field. Refresh field list from the Dashboards Management > Index Patterns page* en los eventos de Wazuh, el procedimiento correcto es: Menu de la interfaz Web de Wazuh / Dashboard Management / Index Patterns / Default Pattern / Refresh field list(flecha circular en la parte superior derecha).
