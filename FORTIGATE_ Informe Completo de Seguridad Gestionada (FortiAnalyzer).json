@@ -2,9 +2,9 @@
   "apiVersion": "dashboard.grafana.app/v2",
   "kind": "Dashboard",
   "metadata": {
-    "name": "v3-fortigate-informe-completo-seguridad",
-    "generation": 33,
-    "creationTimestamp": "2026-10-09T19:12:40Z",
+    "name": "test-v4-fortigate-informe-completo",
+    "generation": 4,
+    "creationTimestamp": "2026-10-16T17:15:01Z",
     "labels": {},
     "annotations": {}
   },
@@ -17,10 +17,7 @@
             "kind": "DataQuery",
             "group": "grafana",
             "version": "v0",
-            "spec": {},
-            "labels": {
-              "grafana.app/export-label": "grafana-1"
-            }
+            "spec": {}
           },
           "enable": true,
           "hide": true,
@@ -111,7 +108,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -269,7 +266,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -371,7 +368,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -478,7 +475,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -578,7 +575,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -676,7 +673,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -713,7 +710,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "B",
@@ -878,7 +875,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1027,7 +1024,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1133,7 +1130,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1202,6 +1199,188 @@
           }
         }
       },
+      "panel-107": {
+        "kind": "Panel",
+        "spec": {
+          "id": 107,
+          "title": "🛠️ Cambios de Configuración (Config Changes Audit)",
+          "description": "Auditoría de modificaciones y ediciones en políticas u objetos por administrador (FortiAnalyzer Página 13).",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-opensearch-datasource",
+                      "version": "v0",
+                      "spec": {
+                        "bucketAggs": [
+                          {
+                            "field": "data.logdesc",
+                            "id": "6",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.msg",
+                            "id": "7",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.devname",
+                            "id": "8",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.ui",
+                            "id": "9",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          }
+                        ],
+                        "metrics": [
+                          {
+                            "id": "1",
+                            "type": "count"
+                          }
+                        ],
+                        "query": "rule.description:*configuration*changes* AND decoder.name:*fortigate*",
+                        "timeField": "@timestamp"
+                      },
+                      "labels": {
+                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {
+                "maxDataPoints": 100
+              }
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.2.0",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Conteo"
+                  }
+                ]
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "data.user"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "User Name"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "data.ui"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Login Interface / Source"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "data.srcip"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Source IP"
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "1"
+                    },
+                    "properties": [
+                      {
+                        "id": "displayName",
+                        "value": "Conteo"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "panel-11": {
         "kind": "Panel",
         "spec": {
@@ -1242,7 +1421,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1342,7 +1521,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1442,7 +1621,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1542,7 +1721,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1644,7 +1823,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1769,7 +1948,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -1899,7 +2078,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2057,7 +2236,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2204,7 +2383,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2339,7 +2518,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2441,7 +2620,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2550,7 +2729,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2699,7 +2878,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2845,7 +3024,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -2981,7 +3160,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -3092,7 +3271,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -3216,7 +3395,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -3398,7 +3577,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "Critical",
@@ -3434,7 +3613,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "High/Error",
@@ -3470,7 +3649,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "Warning",
@@ -3506,7 +3685,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "Info/Notice",
@@ -3651,7 +3830,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -3766,32 +3945,34 @@
                       "spec": {
                         "bucketAggs": [
                           {
-                            "field": "data.user",
-                            "id": "2",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "10"
-                            },
-                            "type": "terms"
-                          },
-                          {
-                            "field": "data.ui",
-                            "id": "3",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "5"
-                            },
-                            "type": "terms"
-                          },
-                          {
                             "field": "data.srcip",
                             "id": "4",
                             "settings": {
                               "order": "desc",
                               "orderBy": "1",
                               "size": "5"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.devname",
+                            "id": "5",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
+                            },
+                            "type": "terms"
+                          },
+                          {
+                            "field": "data.logdesc",
+                            "id": "6",
+                            "settings": {
+                              "min_doc_count": "1",
+                              "order": "desc",
+                              "orderBy": "_term",
+                              "size": "10"
                             },
                             "type": "terms"
                           }
@@ -3802,12 +3983,12 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:system AND data.action:login AND (data.status:success OR NOT data.status:failed))",
+                        "query": "data.logdesc:*Admin*login*successful* AND decoder.name:*fortigate*",
                         "timeField": "@timestamp"
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -3966,7 +4147,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -4060,186 +4241,6 @@
           }
         }
       },
-      "panel-45": {
-        "kind": "Panel",
-        "spec": {
-          "id": 45,
-          "title": "🛠️ Cambios de Configuración (Config Changes Audit)",
-          "description": "Auditoría de modificaciones y ediciones en políticas u objetos por administrador (FortiAnalyzer Página 13).",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-opensearch-datasource",
-                      "version": "v0",
-                      "spec": {
-                        "bucketAggs": [
-                          {
-                            "field": "data.user",
-                            "id": "2",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "10"
-                            },
-                            "type": "terms"
-                          },
-                          {
-                            "field": "data.cfgpath",
-                            "id": "3",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "10"
-                            },
-                            "type": "terms"
-                          },
-                          {
-                            "field": "data.action",
-                            "id": "4",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "5"
-                            },
-                            "type": "terms"
-                          }
-                        ],
-                        "metrics": [
-                          {
-                            "id": "1",
-                            "type": "count"
-                          }
-                        ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (rule.id:(81608 OR 81609 OR 81612 OR 81613) OR data.action:(Edit OR Add OR delete OR Set) OR data.cfgpath:*)",
-                        "timeField": "@timestamp"
-                      },
-                      "labels": {
-                        "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {
-                "maxDataPoints": 100
-              }
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "table",
-            "version": "13.2.0",
-            "spec": {
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true,
-                "sortBy": [
-                  {
-                    "desc": true,
-                    "displayName": "Conteo"
-                  }
-                ]
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "data.user"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "User"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "data.cfgpath"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Config Path"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "data.cfgobj"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Config Object"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "data.action"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Action"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "1"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Conteo"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
       "panel-50": {
         "kind": "Panel",
         "spec": {
@@ -4292,7 +4293,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -4440,7 +4441,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -4599,7 +4600,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -4747,7 +4748,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -4881,7 +4882,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5005,7 +5006,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5109,16 +5110,6 @@
                               "size": "5"
                             },
                             "type": "terms"
-                          },
-                          {
-                            "field": "data.catdesc",
-                            "id": "4",
-                            "settings": {
-                              "order": "desc",
-                              "orderBy": "1",
-                              "size": "1"
-                            },
-                            "type": "terms"
                           }
                         ],
                         "metrics": [
@@ -5127,12 +5118,12 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.catdesc:(*Phishing* OR *Malicious* OR *Spam* OR *Fraud*) OR rule.groups:phishing)",
+                        "query": "agent.id:000 AND (rule.description:*phish* OR full_log:*phish*)",
                         "timeField": "@timestamp"
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5153,13 +5144,7 @@
             "spec": {
               "options": {
                 "cellHeight": "sm",
-                "showHeader": true,
-                "sortBy": [
-                  {
-                    "desc": true,
-                    "displayName": "Conteo"
-                  }
-                ]
+                "showHeader": true
               },
               "fieldConfig": {
                 "defaults": {
@@ -5171,6 +5156,9 @@
                         "color": "green"
                       }
                     ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
                   },
                   "custom": {
                     "align": "auto",
@@ -5305,7 +5293,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5467,7 +5455,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5591,7 +5579,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5771,7 +5759,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -5939,7 +5927,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -6107,7 +6095,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -6255,7 +6243,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -6383,7 +6371,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -6520,7 +6508,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -6726,7 +6714,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "VPN Bytes Sent",
@@ -6762,7 +6750,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "VPN Bytes Received",
@@ -6895,7 +6883,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "VPN Bytes Sent",
@@ -6932,7 +6920,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "VPN Bytes Received",
@@ -6972,7 +6960,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7150,7 +7138,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7249,7 +7237,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7351,7 +7339,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7647,7 +7635,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7685,7 +7673,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "B",
@@ -7797,7 +7785,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -7902,7 +7890,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8012,7 +8000,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8111,7 +8099,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8208,7 +8196,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8309,7 +8297,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8410,7 +8398,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8510,7 +8498,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8693,7 +8681,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -8876,7 +8864,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "A",
@@ -9013,7 +9001,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "IP Origen (Atacante)",
@@ -9142,7 +9130,7 @@
                       },
                       "labels": {
                         "grafana.app/export-label": "grafana-opensearch-datasource-1",
-                        "grafana.app/export-datasource-name": "Wazuh-CGMA"
+                        "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
                       }
                     },
                     "refId": "IP Origen (Atacante)",
@@ -9671,7 +9659,7 @@
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-45"
+                          "name": "panel-107"
                         }
                       }
                     }
@@ -10239,7 +10227,7 @@
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
     },
-    "title": "🛡️ FORTIGATE GENERAL: Informe Completo de Seguridad Gestionada",
+    "title": "🛡️ Test Wazuh Teledata en FORTIGATE GENERAL admin login",
     "variables": [
       {
         "kind": "QueryVariable",
@@ -10262,7 +10250,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
@@ -10296,7 +10284,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
@@ -10330,7 +10318,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
@@ -10364,7 +10352,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
@@ -10398,7 +10386,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
@@ -10432,7 +10420,7 @@
             },
             "labels": {
               "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Wazuh-CGMA"
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
             }
           },
           "regex": "",
