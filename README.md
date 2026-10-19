@@ -88,11 +88,23 @@ El dashboard se organiza modularmente en **8 secciones principales**:
 
 ---
 
-## 🔧 Variables de Plantilla (Dashboard Variables)
+## 🔧 Selectores del Dashboard (Dashboard Variables)
 
-El panel incluye selectores dinámicos en la parte superior para filtrar las métricas:
-* `$agent_name`: Nombre del agente Wazuh que recolecta la información.
-* `$devname`: Nombre específico del firewall FortiGate.
-* `$devid`: Número de serie del dispositivo.
-* `$vd`: Virtual Domain (VDOM) específico.
-* `$srcintf` / `$dstintf`: Interfaces de red de entrada/salida.
+El panel cuenta únicamente con **dos selectores principales** en la barra superior para filtrar todas las métricas y paneles de forma dinámica:
+* **`$agent_group` (Grupo de Agentes):** Permite filtrar los datos para todos los grupos o para un grupo de agentes Wazuh específico (`agent.labels.group`).
+* **`$agent_name` (Agente Wazuh):** Permite mostrar los datos de todos los agentes o de un agente específico (`agent.name`).
+
+### 📌 ¿Cómo reconoce Wazuh los Grupos en los Logs?
+Por diseño, la interfaz de Wazuh muestra la columna *groups* porque consulta directamente la base de datos interna de la API de Wazuh Manager (`GET /agents`). Sin embargo, en **Discover** (índice `wazuh-alerts-*`), los eventos individuales no traen un parámetro `group` por defecto.
+
+Para que los logs en OpenSearch/Grafana contengan el grupo del agente, se utiliza el mecanismo nativo de Wazuh: **Etiquetas de Agente (Agent Labels)**:
+1. En el Wazuh Manager, edita la configuración centralizada del grupo (en `/var/ossec/etc/shared/<nombre_grupo>/agent.conf` o desde la GUI en **Management > Groups > [Tu Grupo] > Edit group configuration**).
+2. Añade el bloque `<labels>` con la clave `group`:
+   ```xml
+   <agent_config>
+     <labels>
+       <label key="group">nombre_de_tu_grupo</label>
+     </labels>
+   </agent_config>
+   ```
+3. A partir de ese momento, cada alerta generada por los agentes de ese grupo incluirá automáticamente el campo `agent.labels.group: "nombre_de_tu_grupo"`, permitiendo que el selector de Grafana filtre inmediatamente los paneles.

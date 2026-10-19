@@ -103,7 +103,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.devname:* OR data.devid:*)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.devname:* OR data.devid:*) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -261,7 +261,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.type:traffic AND (data.subtype:forward OR data.sessionid:* OR data.action:(close OR timeout OR client-rst OR server-rst OR accept))) AND agent.name:$agent_name",
+                        "query": "(data.type:traffic AND (data.subtype:forward OR data.sessionid:* OR data.action:(close OR timeout OR client-rst OR server-rst OR accept))) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -363,7 +363,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.service:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.service:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -470,7 +470,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.profile:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.profile:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -570,7 +570,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND (data.action:(Edit OR Add OR delete) OR rule.id:(81608 OR 81609 OR 81612 OR 81613 OR 81631 OR 81632)) AND agent.name:$agent_name",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND (data.action:(Edit OR Add OR delete) OR rule.id:(81608 OR 81609 OR 81612 OR 81613 OR 81631 OR 81632)) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "timestamp"
                       },
                       "labels": {
@@ -668,7 +668,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.dstintf:(*wan* OR *port1* OR *internet*) OR data.dstintfrole:wan OR data.direction:outgoing) AND agent.name:$agent_name",
+                        "query": "(data.dstintf:(*wan* OR *port1* OR *internet*) OR data.dstintfrole:wan OR data.direction:outgoing) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -705,7 +705,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.srcintf:(*wan* OR *port1* OR *internet*) OR data.srcintfrole:wan OR data.direction:incoming) AND agent.name:$agent_name",
+                        "query": "(data.srcintf:(*wan* OR *port1* OR *internet*) OR data.srcintfrole:wan OR data.direction:incoming) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -870,7 +870,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.policyid:* AND agent.name:$agent_name",
+                        "query": "data.policyid:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1019,7 +1019,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.srcintf:* AND agent.name:$agent_name",
+                        "query": "data.srcintf:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1125,7 +1125,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.dstintf:* AND agent.name:$agent_name",
+                        "query": "data.dstintf:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1270,7 +1270,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "rule.description:*configuration*changes* AND decoder.name:*fortigate*",
+                        "query": "rule.description:*configuration*changes* AND decoder.name:*fortigate* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1416,7 +1416,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.sentbyte:* OR data.rcvdbyte:* OR data.type:traffic) AND agent.name:$agent_name",
+                        "query": "(data.sentbyte:* OR data.rcvdbyte:* OR data.type:traffic) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1516,7 +1516,7 @@
                             "type": "cardinality"
                           }
                         ],
-                        "query": "data.srcip:* AND agent.name:$agent_name",
+                        "query": "data.srcip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1616,7 +1616,7 @@
                             "type": "cardinality"
                           }
                         ],
-                        "query": "data.app:* AND agent.name:$agent_name",
+                        "query": "data.app:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1716,7 +1716,7 @@
                             "type": "cardinality"
                           }
                         ],
-                        "query": "data.dstip:* AND agent.name:$agent_name",
+                        "query": "data.dstip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1818,7 +1818,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.service:* AND agent.name:$agent_name",
+                        "query": "data.service:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -1943,7 +1943,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.appcat:* AND agent.name:$agent_name",
+                        "query": "data.appcat:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2073,7 +2073,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.app:* AND agent.name:$agent_name",
+                        "query": "data.app:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2231,7 +2231,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.app:* AND data.srcip:* AND agent.name:$agent_name",
+                        "query": "data.app:* AND data.srcip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2378,7 +2378,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.appcat:* AND data.app:* AND agent.name:$agent_name",
+                        "query": "data.appcat:* AND data.app:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2513,7 +2513,7 @@
                             "type": "cardinality"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND data.devname:* AND agent.name:$agent_name",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND data.devname:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2615,7 +2615,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2724,7 +2724,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -2873,7 +2873,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name",
+                        "query": "(data.appcat:* OR data.catdesc:* OR data.subtype:webfilter) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3019,7 +3019,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.catdesc:* OR data.subtype:webfilter) AND (data.hostname:* OR data.url:*) AND agent.name:$agent_name",
+                        "query": "(data.catdesc:* OR data.subtype:webfilter) AND (data.hostname:* OR data.url:*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3155,7 +3155,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:webfilter OR data.hostname:*) AND data.srcip:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:webfilter OR data.hostname:*) AND data.srcip:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3266,7 +3266,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.srcip:* AND (data.subtype:webfilter OR data.type:traffic OR data.hostname:*) AND agent.name:$agent_name",
+                        "query": "data.srcip:* AND (data.subtype:webfilter OR data.type:traffic OR data.hostname:*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3390,7 +3390,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:system OR data.level:* OR data.severity:*)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:system OR data.level:* OR data.severity:*) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3572,7 +3572,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(critical OR emergency) OR data.severity:critical)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(critical OR emergency) OR data.severity:critical) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3608,7 +3608,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(error OR alert) OR data.severity:high)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(error OR alert) OR data.severity:high) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3644,7 +3644,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:warning OR data.severity:medium)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:warning OR data.severity:medium) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3680,7 +3680,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(notice OR information OR info) OR data.severity:low)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.level:(notice OR information OR info) OR data.severity:low) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3825,7 +3825,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81606 OR 81607 OR 81604 OR 81615 OR 81628 OR 81643 OR 44608 OR 44611 OR 44612 OR 44621 OR 44628 OR 44629) OR data.level:(critical OR error OR alert OR emergency) OR data.severity:(critical OR high) OR rule.level:>=7) AND agent.name:$agent_name",
+                        "query": "(rule.id:(81606 OR 81607 OR 81604 OR 81615 OR 81628 OR 81643 OR 44608 OR 44611 OR 44612 OR 44621 OR 44628 OR 44629) OR data.level:(critical OR error OR alert OR emergency) OR data.severity:(critical OR high) OR rule.level:>=7) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -3983,7 +3983,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "data.logdesc:*Admin*login*successful* AND decoder.name:*fortigate*",
+                        "query": "data.logdesc:*Admin*login*successful* AND decoder.name:*fortigate* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4142,7 +4142,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81606 OR 81607 OR 81614 OR 81615) OR data.logdesc:*login*fail* OR data.action:*login*fail* OR (data.subtype:system AND data.action:login AND (data.status:failed OR data.status:failure))) AND agent.name:$agent_name",
+                        "query": "(rule.id:(81606 OR 81607 OR 81614 OR 81615) OR data.logdesc:*login*fail* OR data.action:*login*fail* OR (data.subtype:system AND data.action:login AND (data.status:failed OR data.status:failure))) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4288,7 +4288,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.appact:(block OR drop OR reset) OR (data.action:(block OR deny OR drop) AND data.app:*))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.appact:(block OR drop OR reset) OR (data.action:(block OR deny OR drop) AND data.app:*)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4436,7 +4436,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.apprisk:(high OR critical OR elevated OR 4 OR 5))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.apprisk:(high OR critical OR elevated OR 4 OR 5)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4595,7 +4595,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.apprisk:(high OR critical OR elevated OR 4 OR 5))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.apprisk:(high OR critical OR elevated OR 4 OR 5)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4743,7 +4743,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:webfilter OR data.action:(blocked OR block OR deny)) AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND data.catdesc:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:webfilter OR data.action:(blocked OR block OR deny)) AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND data.catdesc:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -4877,7 +4877,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND (data.hostname:* OR data.url:*)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND (data.hostname:* OR data.url:*) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5001,7 +5001,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND data.srcip:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.action:(blocked OR block OR deny) OR data.utmaction:(block OR deny)) AND data.srcip:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5118,7 +5118,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "agent.id:000 AND (rule.description:*phish* OR full_log:*phish*)",
+                        "query": "(rule.description:*phish* OR full_log:*phish*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5288,7 +5288,7 @@
                             "type": "avg"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:*) AND data.user:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:*) AND data.user:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5450,7 +5450,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81604 OR 81606 OR 81614 OR 81615 OR 81617 OR 81623 OR 81625 OR 81637) OR (data.subtype:vpn AND (data.action:(\"ssl-login-fail\" OR \"login-fail\") OR data.status:failed)) OR data.action:\"ssl-login-fail\") AND agent.name:$agent_name",
+                        "query": "(rule.id:(81604 OR 81606 OR 81614 OR 81615 OR 81617 OR 81623 OR 81625 OR 81637) OR (data.subtype:vpn AND (data.action:(\"ssl-login-fail\" OR \"login-fail\") OR data.status:failed)) OR data.action:\"ssl-login-fail\") AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5574,7 +5574,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN* OR data.action:login)) OR data.logdesc:*login*fail* OR (data.subtype:vpn AND (data.action:*fail* OR data.reason:*fail*))) AND agent.name:$agent_name",
+                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN* OR data.action:login)) OR data.logdesc:*login*fail* OR (data.subtype:vpn AND (data.action:*fail* OR data.reason:*fail*))) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5754,7 +5754,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.vpntunnel:* OR rule.id:(44614 OR 44615))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.vpntunnel:* OR rule.id:(44614 OR 44615)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -5922,7 +5922,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:ips OR rule.groups:attack OR data.attack:*) AND data.attack:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:ips OR rule.groups:attack OR data.attack:*) AND data.attack:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6090,7 +6090,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:virus OR data.virus:* OR rule.id:(81638 OR 81639 OR 44616))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:virus OR data.virus:* OR rule.id:(81638 OR 81639 OR 44616)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6238,7 +6238,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:(virus OR ips) AND (data.virus:* OR data.attack:*botnet*))",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:(virus OR ips) AND (data.virus:* OR data.attack:*botnet*)) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6366,7 +6366,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:virus OR data.virus:* OR rule.id:(81638 OR 81639)) AND data.srcip:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:virus OR data.virus:* OR rule.id:(81638 OR 81639)) AND data.srcip:* AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6503,7 +6503,7 @@
                             "type": "logs"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6709,7 +6709,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6745,7 +6745,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.rcvdbyte:* AND NOT data.rcvdbyte:0)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.rcvdbyte:* AND NOT data.rcvdbyte:0) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6878,7 +6878,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6915,7 +6915,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN* OR data.action:login)) OR data.logdesc:*login*fail* OR rule.description:*failed*)",
+                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN* OR data.action:login)) OR data.logdesc:*login*fail* OR rule.description:*failed*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -6954,7 +6954,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81624 OR 81625 OR 44614 OR 81616 OR 81617) OR data.action:(\"tunnel-down\" OR \"tunnel_down\" OR \"phase2-down\" OR \"ssl-logout\" OR \"logout\" OR \"close\") OR data.logdesc:*tunnel*down* OR data.logdesc:*tunnel*shutdown* OR data.logdesc:*logout* OR rule.description:*tunnel*down* OR rule.description:*disconnected* OR rule.description:*logout*)",
+                        "query": "(rule.id:(81624 OR 81625 OR 44614 OR 81616 OR 81617) OR data.action:(\"tunnel-down\" OR \"tunnel_down\" OR \"phase2-down\" OR \"ssl-logout\" OR \"logout\" OR \"close\") OR data.logdesc:*tunnel*down* OR data.logdesc:*tunnel*shutdown* OR data.logdesc:*logout* OR rule.description:*tunnel*down* OR rule.description:*disconnected* OR rule.description:*logout*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "queryType": "lucene",
                         "timeField": "@timestamp"
                       },
@@ -7133,7 +7133,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0)",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND agent.name:$agent_name AND (data.subtype:vpn OR data.tunneltype:* OR data.vpntunnel:*) AND (data.sentbyte:* AND NOT data.sentbyte:0) AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7232,7 +7232,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81624 OR 81625 OR 44614 OR 81616 OR 81617) OR data.action:(\"tunnel-down\" OR \"tunnel_down\" OR \"phase2-down\" OR \"ssl-logout\" OR \"logout\" OR \"close\") OR data.logdesc:*tunnel*down* OR data.logdesc:*tunnel*shutdown* OR data.logdesc:*logout* OR rule.description:*tunnel*down* OR rule.description:*disconnected* OR rule.description:*logout*)",
+                        "query": "(rule.id:(81624 OR 81625 OR 44614 OR 81616 OR 81617) OR data.action:(\"tunnel-down\" OR \"tunnel_down\" OR \"phase2-down\" OR \"ssl-logout\" OR \"logout\" OR \"close\") OR data.logdesc:*tunnel*down* OR data.logdesc:*tunnel*shutdown* OR data.logdesc:*logout* OR rule.description:*tunnel*down* OR rule.description:*disconnected* OR rule.description:*logout*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7334,7 +7334,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631)) AND data.dstcountry:*",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631)) AND data.dstcountry:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7630,7 +7630,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN*))) AND data.remip:*",
+                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN*))) AND data.remip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7668,7 +7668,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN*))) AND data.srcip:* AND NOT data.remip:* AND agent.name:$agent_name",
+                        "query": "(rule.id:(81614 OR 81615 OR 81604 OR 81606 OR 81607) OR data.action:(\"ssl-login-fail\" OR \"login-fail\") OR (data.status:failed AND (data.subtype:vpn OR rule.description:*VPN*))) AND data.srcip:* AND NOT data.remip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7780,7 +7780,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.id:(81604 OR 81606 OR 81614 OR 81615 OR 81616 OR 81617 OR 81622 OR 81623 OR 81624 OR 81625 OR 81636 OR 81637 OR 44614 OR 44615) OR (data.subtype:vpn AND (data.action:* OR data.status:*)) OR data.action:(\"tunnel-up\" OR \"tunnel-down\" OR \"ssl-login-fail\" OR \"logout\"))",
+                        "query": "(rule.id:(81604 OR 81606 OR 81614 OR 81615 OR 81616 OR 81617 OR 81622 OR 81623 OR 81624 OR 81625 OR 81636 OR 81637 OR 44614 OR 44615) OR (data.subtype:vpn AND (data.action:* OR data.status:*)) OR data.action:(\"tunnel-up\" OR \"tunnel-down\" OR \"ssl-login-fail\" OR \"logout\")) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -7885,7 +7885,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND data.action:* AND agent.name:$agent_name",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND data.action:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "timestamp"
                       },
                       "labels": {
@@ -7995,7 +7995,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND (data.srcip:* OR data.dstip:*) AND agent.name:$agent_name",
+                        "query": "(rule.groups:fortigate OR decoder.name:fortigate* OR rule.id:(81600 TO 81646) OR rule.id:(44600 TO 44631) OR rule.description:*Fortigate* OR rule.description:*FortiGate*) AND (data.srcip:* OR data.dstip:*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8094,7 +8094,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.id:(81629 OR 44607 OR 44627 OR 44628 OR 44629 OR 44630 OR 44631)) AND (data.action:(\"dropped\" OR \"clear_session\" OR \"block\" OR \"deny\") OR rule.id:81629) AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.id:(81629 OR 44607 OR 44627 OR 44628 OR 44629 OR 44630 OR 44631)) AND (data.action:(\"dropped\" OR \"clear_session\" OR \"block\" OR \"deny\") OR rule.id:81629) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8191,7 +8191,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.id:(81628 OR 44606)) AND (data.action:(\"detected\" OR \"pass\" OR \"pass session\" OR \"monitor\") OR rule.id:81628) AND NOT data.action:(\"dropped\" OR \"clear_session\" OR \"block\" OR \"deny\") AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.id:(81628 OR 44606)) AND (data.action:(\"detected\" OR \"pass\" OR \"pass session\" OR \"monitor\") OR rule.id:81628) AND NOT data.action:(\"dropped\" OR \"clear_session\" OR \"block\" OR \"deny\") AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8292,7 +8292,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.id:(44627 OR 44628 OR 44629 OR 44630 OR 44631 OR 81628 OR 81629)) AND (data.severity:\"critical\" OR rule.id:44628) AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.id:(44627 OR 44628 OR 44629 OR 44630 OR 44631 OR 81628 OR 81629)) AND (data.severity:\"critical\" OR rule.id:44628) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8393,7 +8393,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.type:\"anomaly\" OR data.subtype:\"anomaly\" OR data.attack:(*flood* OR *syn* OR *icmp* OR *Bad*Header* OR *anomaly*) OR rule.description:*anomaly*) AND agent.name:$agent_name",
+                        "query": "(data.type:\"anomaly\" OR data.subtype:\"anomaly\" OR data.attack:(*flood* OR *syn* OR *icmp* OR *Bad*Header* OR *anomaly*) OR rule.description:*anomaly*) AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8493,7 +8493,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack OR data.type:anomaly) AND data.action:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack OR data.type:anomaly) AND data.action:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8676,7 +8676,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.direction:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.direction:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8859,7 +8859,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack OR data.attack:*) AND data.attack:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack OR data.attack:*) AND data.attack:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -8996,7 +8996,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.srcip:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack) AND data.srcip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -9125,7 +9125,7 @@
                             "type": "count"
                           }
                         ],
-                        "query": "(data.subtype:ips OR rule.groups:attack OR data.type:anomaly) AND data.dstip:* AND agent.name:$agent_name",
+                        "query": "(data.subtype:ips OR rule.groups:attack OR data.type:anomaly) AND data.dstip:* AND agent.name:$agent_name AND agent.labels.group:$agent_group",
                         "timeField": "@timestamp"
                       },
                       "labels": {
@@ -10232,6 +10232,40 @@
       {
         "kind": "QueryVariable",
         "spec": {
+          "name": "agent_group",
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "label": "Grupo de Agentes",
+          "hide": "dontHide",
+          "refresh": "onDashboardLoad",
+          "skipUrlSync": false,
+          "query": {
+            "kind": "DataQuery",
+            "group": "grafana-opensearch-datasource",
+            "version": "v0",
+            "spec": {
+              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"agent.labels.group\", \"query\": \"\"}"
+            },
+            "labels": {
+              "grafana.app/export-label": "grafana-opensearch-datasource-1",
+              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
+            }
+          },
+          "regex": "",
+          "regexApplyTo": "value",
+          "sort": "alphabeticalAsc",
+          "definition": "{\"find\": \"terms\", \"field\": \"agent.labels.group\", \"query\": \"\"}",
+          "options": [],
+          "multi": false,
+          "includeAll": true,
+          "allowCustomValue": true
+        }
+      },
+      {
+        "kind": "QueryVariable",
+        "spec": {
           "name": "agent_name",
           "current": {
             "text": "",
@@ -10257,176 +10291,6 @@
           "regexApplyTo": "value",
           "sort": "alphabeticalDesc",
           "definition": "{\"find\": \"terms\", \"field\": \"agent.name\", \"query\": \"\"}",
-          "options": [],
-          "multi": false,
-          "includeAll": true,
-          "allowCustomValue": true
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "name": "devname",
-          "current": {
-            "text": "",
-            "value": ""
-          },
-          "label": "Dispositivo FortiGate (devname)",
-          "hide": "dontHide",
-          "refresh": "onDashboardLoad",
-          "skipUrlSync": false,
-          "query": {
-            "kind": "DataQuery",
-            "group": "grafana-opensearch-datasource",
-            "version": "v0",
-            "spec": {
-              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"data.devname\", \"query\": \"\"}"
-            },
-            "labels": {
-              "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
-            }
-          },
-          "regex": "",
-          "regexApplyTo": "value",
-          "sort": "alphabeticalAsc",
-          "definition": "{\"find\": \"terms\", \"field\": \"data.devname\", \"query\": \"\"}",
-          "options": [],
-          "multi": false,
-          "includeAll": true,
-          "allowCustomValue": true
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "name": "devid",
-          "current": {
-            "text": "",
-            "value": ""
-          },
-          "label": "Serial FortiGate (devid)",
-          "hide": "dontHide",
-          "refresh": "onDashboardLoad",
-          "skipUrlSync": false,
-          "query": {
-            "kind": "DataQuery",
-            "group": "grafana-opensearch-datasource",
-            "version": "v0",
-            "spec": {
-              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"data.devid\", \"query\": \"\"}"
-            },
-            "labels": {
-              "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
-            }
-          },
-          "regex": "",
-          "regexApplyTo": "value",
-          "sort": "alphabeticalAsc",
-          "definition": "{\"find\": \"terms\", \"field\": \"data.devid\", \"query\": \"\"}",
-          "options": [],
-          "multi": false,
-          "includeAll": true,
-          "allowCustomValue": true
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "name": "vd",
-          "current": {
-            "text": "",
-            "value": ""
-          },
-          "label": "VDOM (vd)",
-          "hide": "dontHide",
-          "refresh": "onDashboardLoad",
-          "skipUrlSync": false,
-          "query": {
-            "kind": "DataQuery",
-            "group": "grafana-opensearch-datasource",
-            "version": "v0",
-            "spec": {
-              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"data.vd\", \"query\": \"\"}"
-            },
-            "labels": {
-              "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
-            }
-          },
-          "regex": "",
-          "regexApplyTo": "value",
-          "sort": "alphabeticalAsc",
-          "definition": "{\"find\": \"terms\", \"field\": \"data.vd\", \"query\": \"\"}",
-          "options": [],
-          "multi": false,
-          "includeAll": true,
-          "allowCustomValue": true
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "name": "srcintf",
-          "current": {
-            "text": "",
-            "value": ""
-          },
-          "label": "Interfaz Origen (srcintf)",
-          "hide": "dontHide",
-          "refresh": "onDashboardLoad",
-          "skipUrlSync": false,
-          "query": {
-            "kind": "DataQuery",
-            "group": "grafana-opensearch-datasource",
-            "version": "v0",
-            "spec": {
-              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"data.srcintf\", \"query\": \"\"}"
-            },
-            "labels": {
-              "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
-            }
-          },
-          "regex": "",
-          "regexApplyTo": "value",
-          "sort": "alphabeticalAsc",
-          "definition": "{\"find\": \"terms\", \"field\": \"data.srcintf\", \"query\": \"\"}",
-          "options": [],
-          "multi": false,
-          "includeAll": true,
-          "allowCustomValue": true
-        }
-      },
-      {
-        "kind": "QueryVariable",
-        "spec": {
-          "name": "dstintf",
-          "current": {
-            "text": "",
-            "value": ""
-          },
-          "label": "Interfaz Destino (dstintf)",
-          "hide": "dontHide",
-          "refresh": "onDashboardLoad",
-          "skipUrlSync": false,
-          "query": {
-            "kind": "DataQuery",
-            "group": "grafana-opensearch-datasource",
-            "version": "v0",
-            "spec": {
-              "__legacyStringValue": "{\"find\": \"terms\", \"field\": \"data.dstintf\", \"query\": \"\"}"
-            },
-            "labels": {
-              "grafana.app/export-label": "grafana-opensearch-datasource-1",
-              "grafana.app/export-datasource-name": "Test-Wazuh-multiple-FortiGate-agents"
-            }
-          },
-          "regex": "",
-          "regexApplyTo": "value",
-          "sort": "alphabeticalAsc",
-          "definition": "{\"find\": \"terms\", \"field\": \"data.dstintf\", \"query\": \"\"}",
           "options": [],
           "multi": false,
           "includeAll": true,
